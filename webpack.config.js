@@ -27,8 +27,7 @@ const vendorLibs = [
 const copyAssets = [
     "css", 
     "images", 
-    "fonts",
-    "rulesAndTerms.html"
+    "fonts"
 ];
 
 module.exports = {
