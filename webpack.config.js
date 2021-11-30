@@ -27,7 +27,7 @@ const vendorLibs = [
 
 const copyAssets = [
   "images/favicon.ico",
-  "images/apple-touch-icon.png",
+  "images/apple-touch-icon-small.png",
   "images/apple-touch-icon-72x72.png",
   "images/apple-touch-icon-114x114.png",
 ];

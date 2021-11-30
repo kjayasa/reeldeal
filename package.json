@@ -4,7 +4,7 @@
   "description": "TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.",
   "main": "src/index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --mode production",
     "start": "webpack serve --mode development"
   },
   "repository": {
