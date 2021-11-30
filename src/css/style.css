@@ -1320,4 +1320,17 @@ a.prev:hover {
 
 .tearms-condition-modal{
   width: auto;
+  color:#b3b3b3
+}
+.tearms-condition-modal strong{
+  color:#f6d68f
+}
+.tearms-condition-modal h1,h2,h3,h4{
+  color: rgb(255, 255, 255);
+}
+.tearms-condition-modal thead {
+  color:#f1ead9
+}
+.tearms-condition-modal td,th {
+  padding: 5px;
 }

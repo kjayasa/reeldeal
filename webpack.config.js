@@ -40,8 +40,26 @@ module.exports = {
     rules: [
         {
           test: /\.hbs$/,
-          loader: 'handlebars-loader'
+          loader: "handlebars-loader",
+          options:{
+            helperDirs:[`${__dirname}/src/handlebars-helpers`]
+          }
+
         },
+        {
+            test: /\.md$/,
+            use: [
+                {
+                    loader: "html-loader"
+                },
+                {
+                    loader: "markdown-loader",
+                    options: {
+                        /* your options here */
+                    }
+                }
+            ]
+        }
       ],
     noParse: (content) => /vendor-libs/.test(content),
   },
