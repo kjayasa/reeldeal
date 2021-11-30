@@ -1,20 +1,32 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Web site for kagw Reel deal
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+# How does it work
+the base of teh site is a bootstrap template I bought.
+It uses really oudated js libs.
+I kinda upgraded it to use webpack. 
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+The main index is handle bar template.
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+A helper called **data** is used to pull in sections of the site from the **/data/** folder.
+sectiond are sored as markdown files.
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+## For example,
+The tearms and rules secton is read from a file /data/terms-condition.md.
+
+using
+
+    {{{data "terms-condition.md"}}}
+
+in index.hbs pulls /data/terms-condition.md and renders it inside the index html's tearms and ruls model.
+
+The side is rendered to its final for at build buy running
+
+    npm run build
+
+It publishes the site to ./public folder.
+
+Any push to main kicks of an Azure Dev Ops pipeline that build the site and deploys it using [Azure Static Web App](https://docs.microsoft.com/en-us/azure/static-web-apps/)
+
+# Test
+[reeldeal test site](https://black-grass-04c9be110.azurestaticapps.net/)
