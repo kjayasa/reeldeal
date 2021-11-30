@@ -1,7 +1,26 @@
 
 //"https://maps.google.com/maps/api/js?sensor=false",
 
+import "./css/bootstrap.min.css";
+import "./css/font-awesome.css";
+import "./css/preloader.css";
+import "./css/animate.css";
+import "./css/fancySelect.css";
+import "./css/hover-effect-animate.css";
+import "./css/hover-effect.css";
+import "./css/style.css";
+import "./css/responsive.css";
+
+
+//COLORS
+import "./css/colors/red.css";
+//import "./css/colors/purple.css";
+//import "./css/colors/lime.css";
+//import "./css/colors/blue.css";
+
+
 import globalReelDealConst from "./reel-deal-const";
+
 
 $(function(){
 
@@ -212,27 +231,6 @@ $(function(){
         $("#header-body").css('position', 'relative');
 
 
-
-        /**********************************************************/
-        /* CAROUSEL SLIDER                                        */
-        /**********************************************************/ 
-        var owl = $("#slider");
-
-        /* TESTIMONIAL SYNC WITH CLIENTS */
-        owl.owlCarousel({
-            items : 4, //10 items above 1000px browser width
-            itemsDesktop : [1190, 3], //5 items between 1000px and 901px
-            itemsDesktopSmall     : [992,3], // 3 items betweem 992px and 769px
-            itemsTablet       : [768,2], // 3 items between 768 and 601
-            itemsTabletSmall       : [480,1], // 2 items in widen mobile device
-            itemsMobile       : [320,1], // 1 items in any small mobile device
-            pagination:true,
-            responsiveRefreshRate : 100
-        });
-
-
-
-
         /*********************************************************/
         /*   SCEDULE SECTION MOBILE VIEW                         */             
         /*********************************************************/
@@ -374,26 +372,6 @@ $(function(){
           )
           document.querySelector('head').appendChild(msViewportStyle)
         }
-
-
-
-
-        /***********************************************************/
-        /* TESTIMONIAL SYNC WITH CLIENTS                           */
-        /***********************************************************/
-        $("#sync").owlCarousel({
-            pagination: false,
-            autoPlay : 3000,
-            stopOnHover : true,
-            navigation: false,
-            paginationSpeed : 1000,
-            goToFirstSpeed : 2000,
-            singleItem : true,
-            autoHeight : true,
-            transitionStyle:"fade"
-        });
-
-
      
     });
 

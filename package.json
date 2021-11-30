@@ -20,11 +20,13 @@
   "devDependencies": {
     "@mcler/webpack-concat-plugin": "^4.1.4",
     "copy-webpack-plugin": "^10.0.0",
+    "css-loader": "^6.5.1",
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",
     "html-loader": "^3.0.1",
     "html-webpack-plugin": "^5.5.0",
     "markdown-loader": "^6.0.0",
+    "mini-css-extract-plugin": "^2.4.5",
     "webpack": "^5.64.4",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.6.0"

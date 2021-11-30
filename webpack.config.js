@@ -3,7 +3,9 @@ const distPath = path.resolve(__dirname, "public");
 
 const CopyPlugin = require("copy-webpack-plugin");
 const ConcatPlugin = require("@mcler/webpack-concat-plugin");
-const HtmlWebpackPlugin=require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const vendorLibs = [
   "jquery-1.11.3.min.js",
@@ -11,7 +13,6 @@ const vendorLibs = [
   "jquery.stellar.min.js",
   "jquery.scrollTo.min.js",
   "jquery.localScroll.min.js",
-  "owl.carousel.min.js",
   "jquery.nav.js",
   "wow.min.js",
   "jquery.nicescroll.min.js",
@@ -25,42 +26,53 @@ const vendorLibs = [
 ];
 
 const copyAssets = [
-    "css", 
-    "images", 
-    "fonts"
+  "images/favicon.ico",
+  "images/apple-touch-icon.png",
+  "images/apple-touch-icon-72x72.png",
+  "images/apple-touch-icon-114x114.png",
 ];
 
 module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "main.js",
-    path: distPath
+    path: distPath,
   },
   module: {
     rules: [
-        {
-          test: /\.hbs$/,
-          loader: "handlebars-loader",
-          options:{
-            helperDirs:[`${__dirname}/src/handlebars-helpers`]
-          }
-
+      {
+        test: /\.hbs$/,
+        loader: "handlebars-loader",
+        options: {
+          helperDirs: [`${__dirname}/src/handlebars-helpers`],
         },
-        {
-            test: /\.md$/,
-            use: [
-                {
-                    loader: "html-loader"
-                },
-                {
-                    loader: "markdown-loader",
-                    options: {
-                        /* your options here */
-                    }
-                }
-            ]
-        }
-      ],
+      },
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: "html-loader",
+          },
+          {
+            loader: "markdown-loader",
+            options: {
+              /* your options here */
+            },
+          },
+        ],
+      },
+      {
+        test: /\.css$/i,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: "css-loader",
+          },
+        ],
+      },
+    ],
     noParse: (content) => /vendor-libs/.test(content),
   },
   devServer: {
@@ -73,7 +85,7 @@ module.exports = {
   plugins: [
     new CopyPlugin({
       patterns: copyAssets.map((dir) => {
-        return { from: path.join("src", dir), to: path.join(distPath, dir) };
+        return { from: path.join("./src", dir), to: path.join(distPath, dir) };
       }),
     }),
     new ConcatPlugin({
@@ -82,11 +94,12 @@ module.exports = {
       filesToConcat: vendorLibs.map((lib) => `./src/vendor-libs/${lib}`),
       attributes: {
         async: false,
-        defer: false
+        defer: false,
       },
     }),
     new HtmlWebpackPlugin({
-        template: './src/index.hbs'
-      })
+      template: "./src/index.hbs",
+    }),
+    new MiniCssExtractPlugin(),
   ],
 };
