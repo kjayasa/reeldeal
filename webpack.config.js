@@ -24,7 +24,12 @@ const vendorLibs = [
   /*"https://maps.google.com/maps/api/js?sensor=false"*/
 ];
 
-const copyDirs = ["css", "images", "fonts"];
+const copyAssets = [
+    "css", 
+    "images", 
+    "fonts",
+    "rulesAndTerms.html"
+];
 
 module.exports = {
   entry: "./src/index.js",
@@ -50,7 +55,7 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: copyDirs.map((dir) => {
+      patterns: copyAssets.map((dir) => {
         return { from: path.join("src", dir), to: path.join(distPath, dir) };
       }),
     }),
@@ -59,7 +64,8 @@ module.exports = {
       fileName: "[name].[hash:8].js",
       filesToConcat: vendorLibs.map((lib) => `./src/vendor-libs/${lib}`),
       attributes: {
-        async: true,
+        async: false,
+        defer: false
       },
     }),
     new HtmlWebpackPlugin({
