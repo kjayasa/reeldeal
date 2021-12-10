@@ -1,4 +1,4 @@
-This must be a short film of any genre with a running time of 20 minutes or under (including title credits).
+This must be a short film of any genre with a running time of 30 minutes or under (including title credits).
 
 Films must not have any objectional content including but not limited to ( nudity, anti social message, propaganda etc).
 
@@ -10,11 +10,11 @@ An entry does not guarantee selection. KAGW reserves the right to reject or disq
 
 Manipravalam award is a special KAGW award given for the Best Malayalam script for the movie that has at least 80% Malayalam script. While we encourage Malayalam script, this festival is NOT dedicated to Malayalam films. The movie may be in any language. However, if not in Malayalam or English language, subtitles must be provided.
 
-Each category be judged without considering the age of the participants in the group. A separate junior award (i.e. age less than 16) for each nomination will open up if there are at least 3 nominations in the category. If there is not, the child may still be applicable for special jury award at the discretion of the judges. The junior awardee must possess a valid school id
+Each category be judged without considering the age of the participants in the group. A separate junior award (i.e. age less than 17) for each nomination will open up if there are at least 3 nominations in the category. If there is not, the child may still be applicable for special jury award at the discretion of the judges. The junior awardee must possess a govenment issued ID as a proof of age.
 
 Film must be submitted in any of the following ways
-- **[Uploaded to FilmFreeway](https://filmfreeway.com/reeldeel)**
-- **A drop box/Google drive/One drive link with the file.**
+- **[Uploaded to FilmFreeway](https://filmfreeway.com/festivals/64127?utm_campaign=ReelDeal&utm_medium=External&utm_source=Submission+Button)**
+- **A drop box/Google drive/One drive link with the file.** (contact us for details)
 
 The file should be one of the following resolutions
 - 1080p
