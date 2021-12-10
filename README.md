@@ -16,7 +16,7 @@ The tearms and rules secton is read from a file /data/terms-condition.md.
 
 using
 
-    {{{data "terms-condition.md"}}}
+    {{{data "terms-condition"}}}
 
 in index.hbs pulls /data/terms-condition.md and renders it inside the index html's tearms and ruls model.
 

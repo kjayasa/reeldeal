@@ -64,12 +64,28 @@
 .our-featured-speaker-right .awart-main-junier{
   color: #b3b3b3;
 }
-
-.our-featured-speaker-right .award-categories  li {
-  color: goldenrod;
-  border-right-style: solid;
-  border-right-color : #ff3030;
+.reel-deal-categories li  {
+    color: rgb(253, 230, 171);
+    font-size: 1.2em;
 }
+
+.reel-deal-categories li > strong {
+    color: goldenrod;
+    border-right-style: solid;
+    border-right-color: #ff3030;
+    margin-right: 5px;
+    padding-right: 10px;
+    font-size: 1.8em;
+    border-width: 1px;
+}
+.reel-deal-categories code  {
+  color: rgb(165, 165, 165);
+  margin: 0px;
+  padding: 0px;
+  font-size: 1em;
+  background-color:transparent;
+}
+
 /*
  ********************************
  *
