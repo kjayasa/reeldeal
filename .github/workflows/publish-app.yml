@@ -10,7 +10,7 @@ on:
       - main
 
 env:
-  AZURE_WEBAPP_NAME: kagw-app-reeldeal
+  AZURE_WEBAPP_NAME: kagw-app-reel-deal
   AZURE_WEBAPP_PACKAGE_PATH: './publish' # Set this to the path to your web app project, defaults to the repository root:
   DOTNET_VERSION: '6.0.100' # The .NET SDK version to use
 
@@ -28,7 +28,7 @@ jobs:
 
     - name: Build
       run: |
-        dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} -r linux-x64 --self-contained true /p:UseAppHost=true
+        dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} -r win-x64 --self-contained true /p:UseAppHost=true
       
     - uses: azure/webapps-deploy@v2
       name: Deploy
