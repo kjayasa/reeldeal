@@ -30,7 +30,7 @@ jobs:
       run: |
         dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} -r linux-x64 --self-contained true /p:UseAppHost=true
     
-    - uses: azure/PublishPipelineArtifact@1
+    - uses: PublishPipelineArtifact@1
       name: download artiffact
       with: 
         targetPath: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
