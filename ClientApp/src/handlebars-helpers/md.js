@@ -1,0 +1,1 @@
+export default (section)=> require( `../content/text/${section}.md`).default;

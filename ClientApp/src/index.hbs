@@ -134,7 +134,7 @@
                     data-wow-duration="1.5s">
                     <div class="about-our-event-left-body">
                         <h2>REEL DEAL</h2>
-                        {{{data "intro"}}}
+                        {{{md "intro"}}}
                     </div>
                 </div>
                 <!-- End: About-Our-Event Left Area  -->
@@ -199,7 +199,7 @@
                 <!-- Start: Our Featured Speaker Right -->
                 <div class="our-featured-speaker-right col-md-6 wow fadeInLeft animated" data-wow-offset="120"
                     data-wow-duration="1.5s">
-                    <div class="reel-deal-categories">{{{data "categories"}}}</div>
+                    <div class="reel-deal-categories">{{{md  "categories"}}}</div>
                 </div>
                 <!-- End: Our Featured Speaker Right -->
 
@@ -288,7 +288,7 @@
                                     <h1>Submit your film</h1>
                                 </div>
                                 <div class="wow fadeInDown animated" data-wow-offset="120" data-wow-duration="1.5s">
-                                    {{{data "rules"}}}
+                                    {{{md  "submition-rules"}}}
                                     <p>Please read the full Rules and terms<a class="btn" data-toggle="modal"
                                             data-target="#terms-condition-modal">here</a></p>
                                 </div>
@@ -306,13 +306,13 @@
                                 <div class="table-single">
                                     <p class="early-bird">
                                         <span class="currency">$</span>
-                                        <span class="rate">25</span>
+                                        <span class="rate">{{{data "submitionPrice.earlyBird"}}}</span>
                                         <br />
                                         <span class="period">Early Bird</span>
                                     </p>
                                     <p class="late">
                                         <span class="currency">$</span>
-                                        <span class="rate">50</span>
+                                        <span class="rate">{{{data "submitionPrice.late"}}}</span>
                                         <br />
                                         <span class="period">Late submission</span>
                                     </p>
@@ -507,7 +507,7 @@
                     <div class="container">
                         <div class="row header-body blog-header">
                             <div class="search col-md-12 col-sm-12">
-                                {{{data "terms-condition"}}}
+                                {{{md "terms-condition"}}}
                             </div><!-- End: search col-md-6 col-sm-12 -->
                         </div><!-- End: row header-body blog-header  -->
                     </div><!--  End: container  -->
