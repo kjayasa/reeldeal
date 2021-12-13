@@ -34,6 +34,7 @@ jobs:
       inputs:
         targetPath: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
         artifactName: ${{ env.AZURE_WEBAPP_NAME }}
+
       
     - uses: azure/webapps-deploy@v2
       name: Deploy
