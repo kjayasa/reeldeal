@@ -1,5 +1,5 @@
 const path = require("path");
-const distPath = path.resolve(__dirname, "public");
+const distPath = path.resolve(__dirname, "build");
 
 const CopyPlugin = require("copy-webpack-plugin");
 const ConcatPlugin = require("@mcler/webpack-concat-plugin");
@@ -79,8 +79,9 @@ module.exports = {
     static: {
       directory: distPath,
     },
+    port:44435,
+    https: true,
     compress: true,
-    port: 9000,
   },
   plugins: [
     new CopyPlugin({
