@@ -26,7 +26,4 @@ The side is rendered to its final for at build buy running
 
 It publishes the site to ./public folder.
 
-Any push to main kicks of an Azure Dev Ops pipeline that build the site and deploys it using [Azure Static Web App](https://docs.microsoft.com/en-us/azure/static-web-apps/)
-
-# Test
-[reeldeal test site](https://black-grass-04c9be110.azurestaticapps.net/)
+Any push to main kicks of an Azure Dev Ops pipeline that build the site and deploys it.
