@@ -66,7 +66,7 @@
 }
 .reel-deal-categories li  {
     color: rgb(253, 230, 171);
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 .reel-deal-categories li > strong {
@@ -75,7 +75,7 @@
     border-right-color: #ff3030;
     margin-right: 5px;
     padding-right: 10px;
-    font-size: 1.8em;
+    font-size: 1.2em;
     border-width: 1px;
 }
 .reel-deal-categories code  {
