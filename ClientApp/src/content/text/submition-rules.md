@@ -4,7 +4,7 @@ Your film must be a short film can be of any genre with a running time of 30 min
 
 Previous Screenings are perfectly acceptable however preference may be given to premiere films when programming festival screenings.
 
-While we encourage Malayalam films, this festival is NOT dedicated to Malayalam films. The movie may be in any language. However, if not in Malayalam or English language, subtitles in engligh must be provided.
+While we encourage Malayalam films, this festival is NOT dedicated to Malayalam films. The movie may be in any language. However, if not in Malayalam or English language, subtitles in English must be provided.
 
 You may submit more than one film as long as each film meets the eligibility requirements.Each entry must be a separate submission.
 
