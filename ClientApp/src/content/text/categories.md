@@ -4,7 +4,7 @@
 - **Junior**  `For any film maker under the age of 17`
 - **Insta Reel** `For any film 60 seconds or under`
 
-### Submitions in **General** and **Junior** categories are considered for the following awards
+### Submissions in **General** and **Junior** categories are considered for the following awards
 
 - Best Film
 - Best Screenplay 
@@ -15,7 +15,7 @@
 - Best Acting - Lead Role - Female 
 - Best Acting - Supporting Role - Male 
 - Best Acting - Supporting Role – Female 
-- Best Acting - child – Female 
+- Best Acting - child – Male 
 - Best Acting – child – Female 
 - Best Visual effects  
 - Best Cinematography  
@@ -25,7 +25,7 @@
 - Special Jury Award (award for excellence based on suggestion the members of the jury) 
 - Spirit award (best uplifting message) 
 
-### Submitions in the **Insta Reel** category are considered for the following awards.
+### Submissions in the **Insta Reel** category are considered for the following awards.
 
 - Best Comedy 
 - Best Dub 
@@ -33,4 +33,4 @@
 - Best Horror 
 - Best imitation 
 - Audience Choice Award 
-- Poplar Vote 
+- Popular Vote 
