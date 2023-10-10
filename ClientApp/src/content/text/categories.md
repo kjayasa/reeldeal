@@ -27,10 +27,5 @@
 
 ### Submissions in the **Insta Reel** category are considered for the following awards.
 
-- Best Comedy 
-- Best Dub 
-- Best Original Music 
-- Best Horror 
-- Best Imitation 
-- Audience Choice Award 
-- Popular Vote 
+- Solo
+- Group
