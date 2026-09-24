@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ReelDeal Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --bg:#111; --panel:#1d1d1d; --accent:#00B3FE; --border:#333; --text:#eee; --muted:#999; }
+    * { box-sizing:border-box; }
+    body { font-family:system-ui,"Segoe UI",Arial,sans-serif; background:var(--bg); color:var(--text); margin:0; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; border-bottom:1px solid var(--border); }
+    header h1 { font-size:1.2rem; margin:0; }
+    header .who { color:var(--muted); font-size:.85rem; }
+    header form { display:inline; }
+    button { font:inherit; cursor:pointer; border:0; border-radius:6px; padding:.5rem .9rem; background:#333; color:#fff; }
+    button.primary { background:var(--accent); }
+    button.danger { background:#a33; }
+    button:hover { filter:brightness(1.1); }
+    nav { display:flex; gap:.5rem; padding:1rem 1.5rem 0; }
+    nav button { background:transparent; color:var(--muted); border-bottom:2px solid transparent; border-radius:0; }
+    nav button.active { color:var(--text); border-bottom-color:var(--accent); }
+    main { padding:1.5rem; max-width:1100px; }
+    .block { background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; }
+    .block h3 { margin:0 0 .5rem; font-size:1rem; }
+    .block .meta { color:var(--muted); font-size:.75rem; margin-bottom:.5rem; }
+    textarea { width:100%; min-height:160px; background:#0d0d0d; color:var(--text); border:1px solid var(--border);
+               border-radius:6px; padding:.75rem; font-family:ui-monospace,Consolas,monospace; font-size:.85rem; resize:vertical; }
+    textarea.tall { min-height:70vh; }
+    .block .head { display:flex; justify-content:space-between; align-items:center; }
+    .row { display:flex; gap:1rem; }
+    .row > * { flex:1; }
+    .preview { background:#0d0d0d; border:1px solid var(--border); border-radius:6px; padding:.75rem; overflow:auto; min-height:160px; }
+    .toolbar { margin-top:.5rem; display:flex; gap:.5rem; align-items:center; }
+    .status { color:var(--muted); font-size:.8rem; }
+    input[type=text],input[type=email],input[type=password] { background:#0d0d0d; color:var(--text); border:1px solid var(--border);
+               border-radius:6px; padding:.5rem; font:inherit; }
+    td .actions { display:flex; gap:.4rem; justify-content:flex-end; }
+    #varsTable input[type=text] { width:100%; }
+    .tag { font-size:.75rem; padding:.15rem .5rem; border-radius:999px; background:#2a2a2a; color:var(--muted); }
+    .tag.ok { background:#163d2a; color:#7ee2a8; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { text-align:left; padding:.5rem; border-bottom:1px solid var(--border); font-size:.9rem; }
+    .hidden { display:none; }
+    a { color:var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ReelDeal CMS</h1>
+    <div>
+      <span class="who" id="who"></span>
+      <a href="/" target="_blank">View site ↗</a>
+      <form method="post" action="/admin/logout"><button type="submit">Sign out</button></form>
+    </div>
+  </header>
+
+  <nav>
+    <button data-tab="content" class="active">Content</button>
+    <button data-tab="template">Page template</button>
+    <button data-tab="variables">Variables</button>
+    <button data-tab="users">Admins</button>
+  </nav>
+
+  <main>
+    <section id="tab-content">
+      <div class="block">
+        <h3>Add content block</h3>
+        <div class="meta">Use it in the page template with <code>{{{ContentBlocks "key"}}}</code>. Blocks can use variables too, e.g. <code>{{submissionPrice_late}}</code>.</div>
+        <div class="toolbar">
+          <input type="text" id="newBlockKey" placeholder="key (letters, digits, - or _)" autocomplete="off">
+          <button class="primary" id="addBlock">Add block</button>
+          <span class="status" id="addBlockStatus"></span>
+        </div>
+      </div>
+      <div id="blocks"></div>
+    </section>
+
+    <section id="tab-template" class="hidden">
+      <div class="block">
+        <h3>Page template (Handlebars)</h3>
+        <div class="meta" id="templateMeta"></div>
+        <div class="meta">The whole home page. Insert content blocks with <code>{{{ContentBlocks "key"}}}</code>, variables with <code>{{name}}</code>,
+          and built assets with <code>{{{file-link "main.js"}}}</code>.</div>
+        <textarea id="template" class="tall" spellcheck="false"></textarea>
+        <div class="toolbar">
+          <button class="primary" id="saveTemplate">Save page template</button>
+          <span class="status" id="templateStatus"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-variables" class="hidden">
+      <div class="block">
+        <h3>Template variables</h3>
+        <div class="meta">Use a variable as <code>{{name}}</code> in the page template or a content block (dates also work with <code>{{date name "long-date"}}</code>).
+          All variables are also available to the site's JavaScript as <code>window.reeldeel_data</code>.</div>
+        <table id="varsTable">
+          <thead><tr><th style="width:22%">Name</th><th style="width:30%">Value</th><th>Description</th><th></th></tr></thead>
+          <tbody></tbody>
+          <tfoot><tr>
+            <td><input type="text" id="newVarName" placeholder="name (letters, digits, _)" autocomplete="off"></td>
+            <td><input type="text" id="newVarValue" placeholder="value" autocomplete="off"></td>
+            <td><input type="text" id="newVarDesc" placeholder="description (optional)" autocomplete="off"></td>
+            <td><div class="actions"><button class="primary" id="addVar">Add</button></div></td>
+          </tr></tfoot>
+        </table>
+        <div class="toolbar"><span class="status" id="varsStatus"></span></div>
+      </div>
+    </section>
+
+    <section id="tab-users" class="hidden">
+      <div class="block">
+        <h3>Admins</h3>
+        <div class="meta">These accounts can sign in to the CMS with their email and password. Passwords must be at least 8 characters.</div>
+        <table id="usersTable"><thead><tr><th>Email</th><th>Added</th><th>Password</th><th></th></tr></thead><tbody></tbody></table>
+        <div class="toolbar" style="margin-top:1rem">
+          <input type="email" id="newEmail" placeholder="name@example.com" autocomplete="off">
+          <input type="password" id="newPassword" placeholder="Password (min 8 chars)" autocomplete="new-password">
+          <button class="primary" id="addUser">Add admin</button>
+          <span class="status" id="usersStatus"></span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h3>Change my password</h3>
+        <div class="toolbar">
+          <input type="password" id="myPassword" placeholder="New password" autocomplete="new-password">
+          <input type="password" id="myPassword2" placeholder="Repeat new password" autocomplete="new-password">
+          <button class="primary" id="changeMyPassword">Update password</button>
+          <span class="status" id="myPasswordStatus"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = sel => document.querySelector(sel);
+    const api = async (method, url, body) => {
+      const res = await fetch(url, {
+        method,
+        headers: body ? { "Content-Type": "application/json" } : {},
+        body: body ? JSON.stringify(body) : undefined
+      });
+      if (!res.ok) throw new Error(await res.text() || res.statusText);
+      const ct = res.headers.get("content-type") || "";
+      return ct.includes("application/json") ? res.json() : null;
+    };
+    const esc = s => s.replace(/[&<>]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+
+    // --- Tabs ---
+    document.querySelectorAll("nav button").forEach(btn => btn.onclick = () => {
+      document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b === btn));
+      ["content","template","variables","users"].forEach(t => $("#tab-" + t).classList.toggle("hidden", t !== btn.dataset.tab));
+    });
+
+    // --- Content ---
+    async function loadContent() {
+      const blocks = await api("GET", "/admin/api/content");
+      const host = $("#blocks");
+      host.innerHTML = "";
+      blocks.forEach(b => {
+        const el = document.createElement("div");
+        el.className = "block";
+        el.id = "block-" + b.key;
+        el.innerHTML = `
+          <div class="head">
+            <h3>${esc(b.key)}</h3>
+            <button class="danger delete">Delete</button>
+          </div>
+          <div class="meta"><code>{{{ContentBlocks "${esc(b.key)}"}}}</code></div>
+          <div class="meta">Last updated ${esc(b.updatedAt)}${b.updatedBy ? " by " + esc(b.updatedBy) : ""}</div>
+          <div class="row">
+            <textarea spellcheck="false">${esc(b.markdown)}</textarea>
+            <div class="preview"></div>
+          </div>
+          <div class="toolbar">
+            <button class="primary">Save</button>
+            <span class="status"></span>
+          </div>`;
+        const ta = el.querySelector("textarea");
+        const preview = el.querySelector(".preview");
+        const status = el.querySelector(".status");
+        const render = () => preview.innerHTML = marked(ta.value);
+        ta.addEventListener("input", render);
+        render();
+        el.querySelector("button.primary").onclick = async () => {
+          status.textContent = "Saving…";
+          try {
+            await api("PUT", "/admin/api/content/" + encodeURIComponent(b.key), { markdown: ta.value });
+            status.textContent = "Saved ✓";
+          } catch (e) { status.textContent = "Error: " + e.message; }
+        };
+        el.querySelector("button.delete").onclick = async () => {
+          if (!confirm(`Delete the "${b.key}" block?\n\nAny {{{ContentBlocks "${b.key}"}}} in the page template will render empty.`)) return;
+          try { await api("DELETE", "/admin/api/content/" + encodeURIComponent(b.key)); loadContent(); }
+          catch (e) { status.textContent = "Error: " + e.message; }
+        };
+        host.appendChild(el);
+      });
+    }
+
+    $("#addBlock").onclick = async () => {
+      const status = $("#addBlockStatus");
+      const key = $("#newBlockKey").value.trim();
+      if (!/^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$/.test(key)) {
+        status.textContent = "Error: key must start with a letter or digit and contain only letters, digits, - or _";
+        return;
+      }
+      if (document.getElementById("block-" + key)) { status.textContent = "Error: a block with that key already exists"; return; }
+      try {
+        await api("PUT", "/admin/api/content/" + encodeURIComponent(key), { markdown: "" });
+        $("#newBlockKey").value = "";
+        status.textContent = `Added "${key}" ✓`;
+        await loadContent();
+        document.getElementById("block-" + key)?.scrollIntoView({ behavior: "smooth" });
+      } catch (e) { status.textContent = "Error: " + e.message; }
+    };
+
+    // --- Page template ---
+    async function loadTemplate() {
+      const t = await api("GET", "/admin/api/template");
+      $("#template").value = t.source;
+      $("#templateMeta").textContent = t.updatedAt ? `Last updated ${t.updatedAt}${t.updatedBy ? " by " + t.updatedBy : ""}` : "";
+    }
+    $("#saveTemplate").onclick = async () => {
+      const status = $("#templateStatus");
+      status.textContent = "Saving…";
+      try {
+        await api("PUT", "/admin/api/template", { source: $("#template").value });
+        status.textContent = "Saved ✓";
+        loadTemplate();
+      } catch (e) { status.textContent = "Error: " + e.message; }
+    };
+
+    // Tiny Markdown preview (headings, bold/italic, links, lists) — preview only; the
+    // server uses Markdig for the real render.
+    function marked(md) {
+      let h = esc(md);
+      h = h.replace(/^###### (.*)$/gm, "<h6>$1</h6>")
+           .replace(/^##### (.*)$/gm, "<h5>$1</h5>")
+           .replace(/^#### (.*)$/gm, "<h4>$1</h4>")
+           .replace(/^### (.*)$/gm, "<h3>$1</h3>")
+           .replace(/^## (.*)$/gm, "<h2>$1</h2>")
+           .replace(/^# (.*)$/gm, "<h1>$1</h1>")
+           .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+           .replace(/\*(.+?)\*/g, "<em>$1</em>")
+           .replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>')
+           .replace(/^[-*] (.*)$/gm, "<li>$1</li>");
+      return h.replace(/(<li>.*<\/li>)/s, "<ul>$1</ul>").replace(/\n{2,}/g, "<br><br>");
+    }
+
+    // --- Variables ---
+    const VAR_NAME = /^[A-Za-z_][A-Za-z0-9_]{0,63}$/;
+    const escAttr = s => esc(s || "").replace(/"/g, "&quot;");
+    const saveVariable = (name, value, description) =>
+      api("PUT", "/admin/api/variables/" + encodeURIComponent(name), { value, description });
+
+    async function loadVariables() {
+      const vars = await api("GET", "/admin/api/variables");
+      const tbody = $("#varsTable tbody");
+      tbody.innerHTML = "";
+      vars.forEach(v => {
+        const tr = document.createElement("tr");
+        tr.id = "var-" + v.name;
+        tr.innerHTML = `<td><code>${esc(v.name)}</code></td>
+          <td><input type="text" class="value" value="${escAttr(v.value)}"></td>
+          <td><input type="text" class="desc" value="${escAttr(v.description)}" placeholder="—"></td>
+          <td><div class="actions"><button class="primary save">Save</button><button class="danger delete">Delete</button></div></td>`;
+        tr.title = `Last updated ${v.updatedAt}${v.updatedBy ? " by " + v.updatedBy : ""}`;
+        const status = $("#varsStatus");
+        tr.querySelector("button.save").onclick = async () => {
+          try {
+            await saveVariable(v.name, tr.querySelector(".value").value, tr.querySelector(".desc").value);
+            status.textContent = `Saved ${v.name} ✓`;
+          } catch (e) { status.textContent = "Error: " + e.message; }
+        };
+        tr.querySelector("button.delete").onclick = async () => {
+          if (!confirm(`Delete the "${v.name}" variable?\n\nAny {{${v.name}}} in the page template or content blocks will render empty.`)) return;
+          try { await api("DELETE", "/admin/api/variables/" + encodeURIComponent(v.name)); status.textContent = `Deleted ${v.name}`; loadVariables(); }
+          catch (e) { status.textContent = "Error: " + e.message; }
+        };
+        tbody.appendChild(tr);
+      });
+    }
+    $("#addVar").onclick = async () => {
+      const status = $("#varsStatus");
+      const name = $("#newVarName").value.trim();
+      if (!VAR_NAME.test(name)) { status.textContent = "Error: name must start with a letter or _ and contain only letters, digits or _"; return; }
+      if (name.toLowerCase() === "all_data") { status.textContent = "Error: 'all_data' is reserved"; return; }
+      if (document.getElementById("var-" + name)) { status.textContent = "Error: a variable with that name already exists"; return; }
+      try {
+        await saveVariable(name, $("#newVarValue").value, $("#newVarDesc").value);
+        $("#newVarName").value = $("#newVarValue").value = $("#newVarDesc").value = "";
+        status.textContent = `Added ${name} ✓`;
+        loadVariables();
+      } catch (e) { status.textContent = "Error: " + e.message; }
+    };
+
+    // --- Users ---
+    let myEmail = "";
+    const MIN_PW = 8;
+
+    async function setPassword(email, password) {
+      await api("PUT", "/admin/api/users/" + encodeURIComponent(email) + "/password", { password });
+    }
+
+    async function loadUsers() {
+      const users = await api("GET", "/admin/api/users");
+      const tbody = $("#usersTable tbody");
+      tbody.innerHTML = "";
+      users.forEach(u => {
+        const isMe = u.email.toLowerCase() === myEmail.toLowerCase();
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${esc(u.email)}${isMe ? ' <span class="tag">you</span>' : ""}</td>
+          <td>${esc(u.addedAt)}</td>
+          <td>${u.hasPassword ? `<span class="tag ok" title="${esc(u.passwordSetAt || "")}">set</span>` : '<span class="tag">not set</span>'}</td>
+          <td><div class="actions"><button class="reset">${u.hasPassword ? "Reset password" : "Set password"}</button><button class="danger">Remove</button></div></td>`;
+        tr.querySelector("button.reset").onclick = async () => {
+          const pw = prompt(`New password for ${u.email} (min ${MIN_PW} characters):`);
+          if (pw === null) return;
+          if (pw.length < MIN_PW) { $("#usersStatus").textContent = `Error: password must be at least ${MIN_PW} characters`; return; }
+          try { await setPassword(u.email, pw); $("#usersStatus").textContent = `Password updated for ${u.email} ✓`; loadUsers(); }
+          catch (e) { $("#usersStatus").textContent = "Error: " + e.message; }
+        };
+        tr.querySelector("button.danger").onclick = async () => {
+          if (!confirm(`Remove ${u.email} from the admins?${isMe ? "\n\nThis is your own account — you will be signed out." : ""}`)) return;
+          try { await api("DELETE", "/admin/api/users/" + encodeURIComponent(u.email)); loadUsers(); }
+          catch (e) { $("#usersStatus").textContent = "Error: " + e.message; }
+        };
+        tbody.appendChild(tr);
+      });
+    }
+    $("#addUser").onclick = async () => {
+      const email = $("#newEmail").value.trim();
+      const password = $("#newPassword").value;
+      if (!email) return;
+      if (password && password.length < MIN_PW) { $("#usersStatus").textContent = `Error: password must be at least ${MIN_PW} characters`; return; }
+      try {
+        await api("POST", "/admin/api/users", { email, password: password || null });
+        $("#newEmail").value = ""; $("#newPassword").value = "";
+        $("#usersStatus").textContent = password ? "Admin added ✓" : "Admin added without a password — set one before they can sign in.";
+        loadUsers();
+      } catch (e) { $("#usersStatus").textContent = "Error: " + e.message; }
+    };
+    $("#changeMyPassword").onclick = async () => {
+      const status = $("#myPasswordStatus");
+      const pw = $("#myPassword").value, pw2 = $("#myPassword2").value;
+      if (pw.length < MIN_PW) { status.textContent = `Error: password must be at least ${MIN_PW} characters`; return; }
+      if (pw !== pw2) { status.textContent = "Error: passwords don't match"; return; }
+      try {
+        await setPassword(myEmail, pw);
+        $("#myPassword").value = ""; $("#myPassword2").value = "";
+        status.textContent = "Password updated ✓";
+        loadUsers();
+      } catch (e) { status.textContent = "Error: " + e.message; }
+    };
+
+    // --- Init ---
+    (async () => {
+      try { const me = await api("GET", "/admin/api/me"); myEmail = me.email || ""; $("#who").textContent = myEmail; } catch {}
+      loadContent(); loadTemplate(); loadVariables(); loadUsers();
+    })();
+  </script>
+</body>
+</html>
